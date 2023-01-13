@@ -137,6 +137,10 @@ class VacuumDevice extends Device {
 				this.setCapabilityValue('MopStatus', Boolean(level));
 			});
 
+			this.vacbot.on('WaterBoxInfo', (level) => {
+				this.setCapabilityValue('MopStatus', Boolean(level));
+			});
+
 			this.vacbot.on('CleanCount', (mode) => {
 				this.setCapabilityValue('CleanCount', Boolean((mode - 1)));
 			});
@@ -494,7 +498,6 @@ class VacuumDevice extends Device {
 		});
 
 		while (flowTokens.length) {
-			this.log('Popped!');
 			flowTokens.pop();
 		}
 
