@@ -1,0 +1,82 @@
+{
+  "id": "nl.onzewifi.deebott9",
+  "version": "1.1.7",
+  "compatibility": ">=8.1.1",
+  "sdk": 3,
+  "name": {
+    "en": "< Deebot T9 >",
+    "nl": "< Deebot T9 >"
+  },
+  "brandColor": "#4520DF",
+  "description": {
+    "en": "Connect your Ecovacs Deebot 950type (with mopping system)",
+    "nl": "Verbind je Ecovacs Deebot 950type (met dweil functie)"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Sascha (mrbungle64)"
+      },
+      {
+        "name": "Olivier Messiant"
+      }
+    ]
+  },
+  "category": [
+    "appliances"
+  ],
+  "homeyCommunityTopicId": 11498,
+  "permissions": [],
+  "platforms": [
+    "local"
+  ],
+  "images": {
+    "small": "/assets/images/DeebotT9-Small.png",
+    "large": "/assets/images/DeebotT9-Large.png",
+    "xlarge": "/assets/images/DeebotT9-Extra-Large.png"
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "paypal.com/paypalme/paypallrvdijk"
+      }
+    }
+  },
+  "author": {
+    "name": "Ricardo van Dijk",
+    "email": "rvdijk@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com"
+  },
+  "drivers": [
+    {
+      "id": "deebot",
+      "name": {
+        "en": "deebot"
+      },
+      "class": "tv",
+      "capabilities": [
+        "onoff"
+      ],
+      "images": {
+        "small": "/drivers/Deebot/assets/images/Deebot-small.png",
+        "large": "/drivers/Deebot/assets/images/Deebot-large.png"
+      }
+    }
+  ],
+  "tags": {
+    "en": [
+      "Deebot",
+      "mopping",
+      "clean report",
+      "ecovacs multimap"
+    ],
+    "nl": [
+      "Deebot",
+      "dweilen",
+      "clean report",
+      "ecovacs multimap"
+    ]
+  }
+}

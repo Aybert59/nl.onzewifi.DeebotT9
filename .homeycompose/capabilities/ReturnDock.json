@@ -1,0 +1,9 @@
+{
+    "type": "boolean",
+    "getable": true,
+    "setable": true,
+    "title": {
+        "en": "Return to dock"
+    },
+    "icon": "/assets/ReturnDock.svg"
+}

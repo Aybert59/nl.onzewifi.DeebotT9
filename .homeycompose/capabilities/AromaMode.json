@@ -1,0 +1,9 @@
+{
+    "type": "boolean",
+    "getable": true,
+    "uiComponent": "sensor",
+    "title": {
+        "en": "Freshen air while cleaning"
+    },
+    "icon": "/assets/AromaMode.svg"
+}

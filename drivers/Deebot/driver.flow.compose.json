@@ -1,0 +1,176 @@
+{
+    "actions": [
+        {
+            "id": "auto_clean",
+            "title": {
+                "en": "Start AutoCleaning"
+            },
+            "titleFormatted": {
+                "en": "Start cleaning all rooms"
+            },
+            "platforms": [
+                "local"
+            ]
+        },
+        {
+            "id": "spot_area",
+            "title": {
+                "en": "Clean zone ...",
+                "fr": "Nettoie la pièce ...",
+                "nl": "Maak kamer schoon"
+            },
+            "titleFormatted": {
+                "en": "Clean zone [[zone]]",
+                "fr": "Nettoie la piece [[zone]]",
+                "nl": "Maak [[zone]]"
+            },
+            "platforms": [
+                "local"
+            ],
+            "args": [
+                {
+                    "type": "autocomplete",
+                    "name": "zone",
+                    "required": false,
+                    "title": {
+                        "en": "Zone",
+                        "fr": "Pièce",
+                        "nl": "Kamer"
+                    },
+                    "placeholder": {
+                        "en": "kitchen",
+                        "fr": "Cuisine",
+                        "nl": "Keuken"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "spot_areas",
+            "title": {
+                "en": "Clean zones ...",
+                "fr": "Nettoie la pièces ...",
+                "nl": "Maak kamers schoon"
+            },
+            "titleFormatted": {
+                "en": "Clean [[zones]]",
+                "fr": "Nettoie la piece [[zones]]",
+                "nl": "Maak [[zones]] schoon"
+            },
+            "platforms": [
+                "local"
+            ],
+            "args": [
+                {
+                    "type": "text",
+                    "name": "zones",
+                    "required": false,
+                    "title": {
+                        "en": "Zones",
+                        "fr": "Pièces",
+                        "nl": "Kamers"
+                    },
+                    "placeholder": {
+                        "en": "kitchen",
+                        "fr": "Cuisine",
+                        "nl": "Keuken"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "pauze_clean",
+            "title": {
+                "en": "Pauze Cleaning"
+            },
+            "titleFormatted": {
+                "en": "Temporary pauze cleaning"
+            },
+            "platforms": [
+                "local"
+            ]
+        },
+        {
+            "id": "return_dock",
+            "title": {
+                "en": "Return to dock",
+                "fr": "Return to dock",
+                "nl": "Keer terug naar oplaadstation"
+            }
+        }
+    ],
+    "triggers": [
+        {
+            "id": "charge_state_change",
+            "title": {
+                "en": "Charge State has changed",
+                "fr": "L'état de charge a changé",
+                "nl": "Oplaadstatus is veranderd"
+            },
+            "platforms": [
+                "local"
+            ]
+        },
+        {
+            "id": "clean_state_change",
+            "title": {
+                "en": "Clean State has changed",
+                "fr": "L'état de nettoyage a changé",
+                "nl": "Schoonmaakstatus is veranderd"
+            },
+            "platforms": [
+                "local"
+            ]
+        },
+        {
+            "id": "zone_change",
+            "title": {
+                "en": "Location has changed",
+                "fr": "Le lieu a changé",
+                "nl": "Locatie is veranderd"
+            },
+            "platforms": [
+                "local"
+            ]
+        },
+        {
+            "id": "clean_report",
+            "title": {
+                "en": "New CleanReport"
+            },
+            "platforms": [
+                "local"
+            ],
+            "tokens": [
+                {
+                    "name": "image",
+                    "type": "image",
+                    "title": {
+                        "en": "Latest CleanLog image"
+                    }
+                },
+                {
+                    "name": "date",
+                    "type": "string",
+                    "title": {
+                        "en": "Time of completion"
+                    }
+                },
+                {
+                    "name": "stopReason",
+                    "type": "string",
+                    "title": {
+                        "en": "Reason for stopping"
+                    }
+                },
+                {
+                    "name": "type",
+                    "type": "string",
+                    "title": {
+                        "en": "Type of cleaning"
+                    }
+                }
+            ]
+        }
+    ]
+}
