@@ -55,5 +55,8 @@
   },
   "1.1.7": {
     "en": "Initial published version"
+  },
+  "1.1.8": {
+    "en": "Fixed a few bugs and optimized some flows"
   }
 }
