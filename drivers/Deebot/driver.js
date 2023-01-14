@@ -30,12 +30,6 @@ class VacuumDriver extends Driver {
 		return VacuumDevice;
 	}
 
-	triggerNewCleanReport(device, tokens) {
-		this.cleanreport
-			.trigger(device, tokens)
-			.catch(this.error);
-	}
-
 	async onPair(session) {
 		let username = "";
 		let password = "";

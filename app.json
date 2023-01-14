@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "nl.onzewifi.deebott9",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "compatibility": ">=8.1.1",
   "sdk": 3,
   "name": {
@@ -70,12 +70,19 @@
       {
         "id": "charge_state_change",
         "title": {
-          "en": "Charge State has changed",
-          "fr": "L'état de charge a changé",
-          "nl": "Oplaadstatus is veranderd"
+          "en": "Current chargestate changed"
         },
         "platforms": [
           "local"
+        ],
+        "tokens": [
+          {
+            "name": "state",
+            "type": "string",
+            "title": {
+              "en": "Current charging state"
+            }
+          }
         ],
         "args": [
           {
@@ -86,14 +93,21 @@
         ]
       },
       {
-        "id": "clean_state_change",
+        "id": "operation_change",
         "title": {
-          "en": "Clean State has changed",
-          "fr": "L'état de nettoyage a changé",
-          "nl": "Schoonmaakstatus is veranderd"
+          "en": "Current operation changed"
         },
         "platforms": [
           "local"
+        ],
+        "tokens": [
+          {
+            "name": "operation",
+            "type": "string",
+            "title": {
+              "en": "Current Operation"
+            }
+          }
         ],
         "args": [
           {
@@ -106,12 +120,19 @@
       {
         "id": "zone_change",
         "title": {
-          "en": "Location has changed",
-          "fr": "Le lieu a changé",
-          "nl": "Locatie is veranderd"
+          "en": "Current location changed"
         },
         "platforms": [
           "local"
+        ],
+        "tokens": [
+          {
+            "name": "zone",
+            "type": "string",
+            "title": {
+              "en": "Current Zone"
+            }
+          }
         ],
         "args": [
           {
@@ -157,6 +178,13 @@
             "title": {
               "en": "Type of cleaning"
             }
+          },
+          {
+            "name": "mopped",
+            "type": "string",
+            "title": {
+              "en": "Mop installed"
+            }
           }
         ],
         "args": [
@@ -191,14 +219,10 @@
       {
         "id": "spot_area",
         "title": {
-          "en": "Clean zone ...",
-          "fr": "Nettoie la pièce ...",
-          "nl": "Maak kamer schoon"
+          "en": "Clean zone ..."
         },
         "titleFormatted": {
-          "en": "Clean zone [[zone]]",
-          "fr": "Nettoie la piece [[zone]]",
-          "nl": "Maak [[zone]]"
+          "en": "Clean zone [[zone]]"
         },
         "platforms": [
           "local"
@@ -214,14 +238,10 @@
             "name": "zone",
             "required": false,
             "title": {
-              "en": "Zone",
-              "fr": "Pièce",
-              "nl": "Kamer"
+              "en": "Zone"
             },
             "placeholder": {
-              "en": "kitchen",
-              "fr": "Cuisine",
-              "nl": "Keuken"
+              "en": "kitchen"
             }
           }
         ]
@@ -229,14 +249,10 @@
       {
         "id": "spot_areas",
         "title": {
-          "en": "Clean zones ...",
-          "fr": "Nettoie la pièces ...",
-          "nl": "Maak kamers schoon"
+          "en": "Clean zones ..."
         },
         "titleFormatted": {
-          "en": "Clean [[zones]]",
-          "fr": "Nettoie la piece [[zones]]",
-          "nl": "Maak [[zones]] schoon"
+          "en": "Clean [[zones]]"
         },
         "platforms": [
           "local"
@@ -252,14 +268,10 @@
             "name": "zones",
             "required": false,
             "title": {
-              "en": "Zones",
-              "fr": "Pièces",
-              "nl": "Kamers"
+              "en": "Zones"
             },
             "placeholder": {
-              "en": "kitchen",
-              "fr": "Cuisine",
-              "nl": "Keuken"
+              "en": "kitchen"
             }
           }
         ]
@@ -286,9 +298,7 @@
       {
         "id": "return_dock",
         "title": {
-          "en": "Return to dock",
-          "fr": "Return to dock",
-          "nl": "Keer terug naar oplaadstation"
+          "en": "Return to dock"
         },
         "args": [
           {

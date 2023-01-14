@@ -101,7 +101,7 @@ class VacuumDevice extends Device {
 		this.setStoreValue('areas', voidTable);
 		this.setStoreValue('mapnames', voidTable);
 
-		let app = this;
+		// let app = this;
 
 		this.log('Deebot ApiVersion : ', api.getVersion());
 		this.vacbot = api.getVacBot(api.uid, EcoVacsAPI.REALM, api.resource, api.user_access_token, data.vacuum, data.geo);
@@ -116,8 +116,9 @@ class VacuumDevice extends Device {
 			});
 
 			const changeChargeStateTrigger = this.homey.flow.getDeviceTriggerCard('charge_state_change');
-			const changeCleanStateTrigger = this.homey.flow.getDeviceTriggerCard('clean_state_change');
+			const changeOperationTrigger = this.homey.flow.getDeviceTriggerCard('operation_change');
 			const changeZoneTrigger = this.homey.flow.getDeviceTriggerCard('zone_change');
+			const cleanReportTrigger = this.homey.flow.getDeviceTriggerCard('clean_report');
 
 			const CleanLogTriggerImage = await this.homey.images.createImage();
 			CleanLogTriggerImage.setPath('/userdata/latestCleanLog_(' + data.id + ').png');
@@ -170,7 +171,6 @@ class VacuumDevice extends Device {
 			});
 
 			this.vacbot.on('CleanLog', async (object) => {
-				this.log('New CleanLog was received (Initialization: ' + init + ')');
 				this.vacbot.downloadSecuredContent(object[0].imageUrl, '/userdata/latestCleanLog_(' + data.id + ').png');
 				if (typeof latestCleanLogImage == 'undefined') {
 					const latestCleanLogImage = await this.homey.images.createImage();
@@ -205,30 +205,56 @@ class VacuumDevice extends Device {
 					image: CleanLogTriggerImage,
 					date: object[0].date.toString(),
 					type: object[0].type.toString(),
-					stopReason: stopReason
+					stopReason: stopReason,
+					mopped: this.getCapabilityValue('MopStatus')
 				};
 
 				if (!init) {
-					this.driver.triggerNewCleanReport(this, tokens);
+					this.log('New CleanLog was received');
+					cleanReportTrigger.trigger(this, tokens);
 				} else {
 					init = false;
 				}
 			});
 
 			this.vacbot.on('CleanReport', (status) => {
-				this.log('CleanReport: ' + status);
 				if (status !== this.getCapabilityValue('Operation')) {
-					this.log('Received a new CleanReport: ' + status + ' (' + this.getCapabilityValue('Operation') + ')');
-					if (status == 'idle') {
-						this.vacbot.run('GetCleanLogs');
-						//this.setCapabilityValue('onoff', false);
-						this.setCapabilityValue('AutoClean', false);
-					} else if (status !== 'auto') {
-						this.setCapabilityValue('AutoClean', false);
+					this.log('Current Operation: ' + status);
+					switch (status) {
+						case 'idle':
+							this.setCapabilityValue('AutoClean', false);
+							this.setCapabilityValue('ReturnDock', false);
+							this.setCapabilityValue('PauseCleaning', false);
+							this.vacbot.run('GetCleanLogs');
+							break;
+						case 'auto':
+							this.setCapabilityValue('AutoClean', true);
+							this.setCapabilityValue('ReturnDock', false);
+							this.setCapabilityValue('PauseCleaning', false);
+							break;
+						case 'returning':
+							this.setCapabilityValue('AutoClean', false);
+							this.setCapabilityValue('ReturnDock', true);
+							this.setCapabilityValue('PauseCleaning', false);
+							break;
+						case 'pause':
+							this.setCapabilityValue('PauseCleaning', true);
+							break;
+						default:
+							this.setCapabilityValue('ReturnDock', false);
+							this.setCapabilityValue('AutoClean', false);
+							this.setCapabilityValue('PauseCleaning', false);
 					}
+					// if (status == 'idle') {
+					// 	this.vacbot.run('GetCleanLogs');
+					// 	//this.setCapabilityValue('onoff', false);
+					// 	this.setCapabilityValue('AutoClean', false);
+					// } else if (status !== 'auto') {
+					// 	this.setCapabilityValue('AutoClean', false);
+					// }
 				}
 				this.setCapabilityValue('Operation', status);
-				changeCleanStateTrigger.trigger(this);
+				changeOperationTrigger.trigger(this, { operation: status });
 			});
 
 			this.vacbot.on('ChargeState', (status) => {
@@ -237,8 +263,7 @@ class VacuumDevice extends Device {
 
 				if (oldStatus && (oldStatus != status)) {
 					try {
-						this.log('changeChargeStateTrigger');
-						changeChargeStateTrigger.trigger(this);
+						changeChargeStateTrigger.trigger(this, { state: status});
 					}
 					catch (error) {
 						this.log('trigger error : ', error);
@@ -299,10 +324,11 @@ class VacuumDevice extends Device {
 			this.vacbot.on("DeebotPosition", (values) => {
 				let CurrentZone = "unknown";
 				let OldZone = this.getCapabilityValue('CurrentZone');
+				let currentMap = this.getStoreValue('currentMap');
 				var tableAreas = this.getStoreValue('areas');
 				tableAreas.forEach(function (area) {
 					let coord = values.split(',');
-					if (tools.pointInPolygon(area.boundaries, [Number(coord[0]), Number(coord[1])])) {
+					if (tools.pointInPolygon(area.boundaries, [Number(coord[0]), Number(coord[1])]) && area.mapid == currentMap.mapID) {
 						CurrentZone = area.name;
 					}
 				});
@@ -310,21 +336,20 @@ class VacuumDevice extends Device {
 				if (OldZone && (OldZone != CurrentZone)) {
 					try {
 						this.setCapabilityValue('PauseCleaning', false);
-						changeZoneTrigger.trigger(this);
+						changeZoneTrigger.trigger(this, { zone: CurrentZone });
 					}
 					catch (error) {
 						this.log('trigger error : ', error);
 					}
 				}
 			});
-
-
 		});
 
 		this.vacbot.connect();
 
 		setInterval(async function () {
-			// Do Nothing
+			//var tableAreas = app.getStoreValue('areas');
+			//console.log(tableAreas)
 		}, SYNC_INTERVAL);
 
 	}
@@ -424,23 +449,32 @@ class VacuumDevice extends Device {
 	}
 
 	async onCapabilityAutoClean(value, opts) {
-		if (value) { 
-			this.vacbot.clean()
+		if (value) {
+			this.vacbot.clean();
 		} else {
 			this.vacbot.stop();
 		}
 	}
 
 	async onCapabilityPauseCleaning(value, opts) {
-		if (value) { 
+		if (value) {
 			this.vacbot.run("Pause");
 		} else {
 			this.vacbot.run("Resume");
 		}
 	}
 	async onCapabilityReturnDock(value, opts) {
-		this.vacbot.run("Charge")
+		this.vacbot.run("Charge");
 	}
+
+	//////////////////////////////////////////// Triggers ////////////////////////////////////
+
+	// triggerNewCleanReport(device, tokens) {
+	// 	this.cleanreport
+	// 		.trigger(device, tokens)
+	// 		.catch(this.error);
+	// }
+
 	//////////////////////////////////////////// Flows ///////////////////////////////////////
 
 	async flowAutocompleteactionSpotArea(query, args) {
