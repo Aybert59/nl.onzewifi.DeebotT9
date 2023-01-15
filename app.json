@@ -1,7 +1,11 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "nl.onzewifi.deebott9",
+<<<<<<< Updated upstream
   "version": "1.1.8",
+=======
+  "version": "1.2.0",
+>>>>>>> Stashed changes
   "compatibility": ">=8.1.1",
   "sdk": 3,
   "name": {
@@ -215,7 +219,80 @@
             "filter": "driver_id=Deebot"
           }
         ]
+<<<<<<< Updated upstream
       },
+=======
+      }
+    ],
+    "conditions": [
+      {
+        "id": "MoppingModule",
+        "title": {
+          "en": "Mopping module !{{is|isn't}} attached"
+        },
+        "hint": {
+          "en": "Check if the mopping modules is attached"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Deebot"
+          }
+        ]
+      },
+      {
+        "id": "AutoEmptyState",
+        "title": {
+          "en": "Auto empty is !{{enabled|disabled}}"
+        },
+        "hint": {
+          "en": "Check if the auto emptying of the dustbin is or isn't enable"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Deebot"
+          }
+        ]
+      },
+      {
+        "id": "CurrentMap",
+        "title": {
+          "en": "Current map !{{is|isn't}} "
+        },
+        "titleFormatted": {
+          "en": "Check if [[mapname]] !{{is|isn't}} the current map"
+        },
+        "hint": {
+          "en": "Check if a certain map is the current map"
+        },
+        "platforms": [
+          "local"
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Deebot"
+          },
+          {
+            "type": "autocomplete",
+            "name": "mapname",
+            "required": true,
+            "title": {
+              "en": "Current map"
+            },
+            "placeholder": {
+              "en": "Downstairs"
+            }
+          }
+        ]
+      }
+    ],
+    "actions": [
+>>>>>>> Stashed changes
       {
         "id": "spot_area",
         "title": {
@@ -236,7 +313,7 @@
           {
             "type": "autocomplete",
             "name": "zone",
-            "required": false,
+            "required": true,
             "title": {
               "en": "Zone"
             },
@@ -266,7 +343,7 @@
           {
             "type": "text",
             "name": "zones",
-            "required": false,
+            "required": true,
             "title": {
               "en": "Zones"
             },

@@ -11,6 +11,17 @@ class VacuumDevice extends Device {
 	async onInit() {
 
 		this.log('Device ' + this.getName() + ' has been initialized');
+<<<<<<< Updated upstream
+=======
+
+		let api = global.DeviceAPI;
+		if (api == null) {
+			this.log('system reboot, reconnecting');
+			this.driver.onRepair(null, this);
+		} else {
+			this.log('new device, do nothing else');
+		}
+>>>>>>> Stashed changes
 
 		//this.registerCapabilityListener('onoff', this.onCapabilityOnoff.bind(this));
 		this.registerCapabilityListener('AutoClean', this.onCapabilityAutoClean.bind(this));
@@ -30,8 +41,35 @@ class VacuumDevice extends Device {
 			this.vacbot.clean();
 		});
 
+<<<<<<< Updated upstream
 		const actionSpotArea = this.homey.flow.getActionCard('spot_area');
 		actionSpotArea.registerArgumentAutocompleteListener('zone', this.flowAutocompleteactionSpotArea.bind(this));
+=======
+		const actionRetunrDock = this.homey.flow.getActionCard('ReturnDock');
+		actionRetunrDock.registerRunListener(async (args, state) => {
+			this.setCapabilityValue('ReturnDock', true);
+			this.vacbot.charge();
+		});
+
+		const actionEmptyDustBin = this.homey.flow.getActionCard('EmptyDustBin');
+		actionEmptyDustBin.registerRunListener(async (args, state) => {
+			this.vacbot.run('EmptyDustBin');
+		});
+
+		const actionPauseCleaning = this.homey.flow.getActionCard('PauseCleaning');
+		actionPauseCleaning.registerRunListener(async (args, state) => {
+			this.setCapabilityValue('PauseCleaning', true);
+			this.vacbot.pause();
+		});
+
+		const actionResumeCleaning = this.homey.flow.getActionCard('ResumeCleaning');
+		actionResumeCleaning.registerRunListener(async (args, state) => {
+			this.setCapabilityValue('PauseCleaning', false);
+			this.vacbot.resume();
+		});
+
+		const actionSpotArea = this.homey.flow.getActionCard('SpotArea');
+>>>>>>> Stashed changes
 		actionSpotArea.registerRunListener(async (args, state) => {
 			if (args.zone) {
 				this.log('Clean zone: ' + args.zone.id);
@@ -73,6 +111,7 @@ class VacuumDevice extends Device {
 			}
 		});
 
+<<<<<<< Updated upstream
 		const rechargeAction = this.homey.flow.getActionCard('return_dock');
 		rechargeAction.registerRunListener(this.flowRechargeAction.bind(this));
 
@@ -87,29 +126,75 @@ class VacuumDevice extends Device {
 
 		//const changeChannelCondition = this.homey.flow.getConditionCard('current_channel');
 		//  changeChannelCondition.registerRunListener(this.flowCurrentChannel.bind(this));
+=======
+		const conditionMoppingModule = this.homey.flow.getConditionCard('MoppingModule');
+		conditionMoppingModule.registerRunListener(async (args, state) => {
+			const MoppingModule = await this.getCapabilityValue('MopStatus');
+			return MoppingModule;
+		});
+
+		const conditionAutoEmptyState = this.homey.flow.getConditionCard('AutoEmptyState');
+		conditionAutoEmptyState.registerRunListener(async (args, state) => {
+			const AutoEmptyState = await this.getCapabilityValue('AutoEmpty');
+			return AutoEmptyState;
+		});
+
+		const conditionCurrentMap = this.homey.flow.getConditionCard('CurrentMap');
+		conditionCurrentMap.registerRunListener(async (args, state) => {
+			return this.getStoreValue('currentMap').mapID == args.mapname.mapid;
+		});
+
+		conditionCurrentMap.registerArgumentAutocompleteListener('mapname', async (query, args) => {
+			var filtered = this.getStoreValue('mapnames').filter((element) => {
+				return element.name.toLowerCase().includes(query.toLowerCase());
+			});
+			return filtered;
+		});
+
+>>>>>>> Stashed changes
 	}
 
 	async onAdded() {
 		this.log('Vacuum has been added');
-		this.log('Deebot name is ' + this.getName());
 
 		let data = this.getData();
 		let api = global.DeviceAPI;
 		let init = true;
 
-		let voidTable = [];
-		this.setStoreValue('areas', voidTable);
-		this.setStoreValue('mapnames', voidTable);
-
-		// let app = this;
+		this.setStoreValue('areas', []);
+		this.setStoreValue('mapnames', []);
+		this.setStoreValue('flowTokens', []);
 
 		this.log('Deebot ApiVersion : ', api.getVersion());
 		this.vacbot = api.getVacBot(api.uid, EcoVacsAPI.REALM, api.resource, api.user_access_token, data.vacuum, data.geo);
 
 		this.vacbot.on('ready', async (event) => {
-			this.log('Deebot device is ready');
+
+			this.log('Model information');
+			this.log('- Name: ' + this.vacbot.getName());
+			this.log('- Model: ' + this.vacbot.deviceModel);
+			this.log('- Image url: ' + this.vacbot.deviceImageURL);
+			this.log('- Is fully supported model: ' + this.vacbot.isSupportedDevice());
+			this.log('- Is a at least partly supported model: ' + this.vacbot.isKnownDevice());
+			this.log('- Is legacy model: ' + this.vacbot.isLegacyModel());
+			this.log('- Is 950 type model: ' + this.vacbot.is950type());
+			this.log('- V2 commands are implemented: ' + this.vacbot.is950type_V2());
+			this.log('- Communication protocol: ' + this.vacbot.getProtocol());
+			this.log('- Main brush: ' + this.vacbot.hasMainBrush());
+			this.log('- Mapping capabilities: ' + this.vacbot.hasMappingCapabilities());
+			this.log('- Edge cleaning mode: ' + this.vacbot.hasEdgeCleaningMode());
+			this.log('- Spot cleaning mode: ' + this.vacbot.hasSpotCleaningMode());
+			this.log('- Spot area cleaning mode: ' + this.vacbot.hasSpotAreaCleaningMode());
+			this.log('- Custom area cleaning mode: ' + this.vacbot.hasCustomAreaCleaningMode());
+			this.log('- Mopping system: ' + this.vacbot.hasMoppingSystem());
+			this.log('- Voice reports: ' + this.vacbot.hasVoiceReports());
+			this.log('- Auto empty station: ' + this.vacbot.hasAutoEmptyStation());
+			this.log('- Canvas module available: ' + api.getCanvasModuleIsAvailable());
+			this.log('- Using country: ' + api.getCountryName());
+			this.log('- Using continent code: ' + api.getContinent());
 			this.setAvailable();
-			this;//.syncStatus(this.vacbot);
+			this.log('Device is ready');
+
 			this.setSettings({
 				username: data.username,
 				password: data.password,
@@ -272,14 +357,13 @@ class VacuumDevice extends Device {
 			});
 
 			this.vacbot.on('Maps', (maps) => {
-				this.log('onMaps received');
-				var mapnames = this.getStoreValue('mapnames');
+				var mapnames = [];
 				for (const i in maps['maps']) {
 					mapnames.push(
 						{
 							"mapid": maps['maps'][i]['mapID'],
 							"mapIndex": maps['maps'][i]['mapIndex'],
-							"mapName": maps['maps'][i]['mapName'],
+							"name": maps['maps'][i]['mapName'],
 							"mapStatus": maps['maps'][i]['mapStatus'],
 							"mapIsCurrentMap": maps['maps'][i]['mapIsCurrentMap']
 						}
@@ -348,8 +432,7 @@ class VacuumDevice extends Device {
 		this.vacbot.connect();
 
 		setInterval(async function () {
-			//var tableAreas = app.getStoreValue('areas');
-			//console.log(tableAreas)
+			// Do nothing, but keep the driver alive
 		}, SYNC_INTERVAL);
 
 	}
@@ -538,7 +621,7 @@ class VacuumDevice extends Device {
 		areas.forEach(async (area) => {
 			var level = mapnames.findIndex((x) => { return x.mapid === area.mapid; });
 			var mapName = mapnames.filter(obj => { return obj.mapid === area.mapid; });
-			var tokenName = mapName[0].mapName + ' - ' + area.name;
+			var tokenName = mapName[0].name + ' - ' + area.name;
 			var tokenID = level + ':' + area.id;
 			flowTokens.push(tokenID);
 			const createToken = await this.homey.flow.createToken(tokenID, {
@@ -554,7 +637,6 @@ class VacuumDevice extends Device {
 			this.setStoreValue('flowTokens', flowTokens);
 		});
 	}
-
 }
 
 module.exports = VacuumDevice;

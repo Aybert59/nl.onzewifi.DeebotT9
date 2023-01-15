@@ -27,7 +27,7 @@
                 {
                     "type": "autocomplete",
                     "name": "zone",
-                    "required": false,
+                    "required": true,
                     "title": {
                         "en": "Zone"
                     },
@@ -52,7 +52,7 @@
                 {
                     "type": "text",
                     "name": "zones",
-                    "required": false,
+                    "required": true,
                     "title": {
                         "en": "Zones"
                     },
@@ -182,5 +182,53 @@
                 }
             ]
         }
+    ],
+    "conditions": [
+        {
+            "id": "MoppingModule",
+            "title": {
+              "en": "Mopping module !{{is|isn't}} attached"
+            },
+            "hint": {
+              "en": "Check if the mopping modules is attached"
+            }
+        },
+        {
+            "id": "AutoEmptyState",
+            "title": {
+              "en": "Auto empty is !{{enabled|disabled}}"
+            },
+            "hint": {
+              "en": "Check if the auto emptying of the dustbin is or isn't enable"
+            }
+        },        
+        {
+            "id": "CurrentMap",
+            "title": {
+              "en": "Current map !{{is|isn't}} "
+            },
+            "titleFormatted": {
+                "en": "Check if [[mapname]] !{{is|isn't}} the current map"
+            },
+            "hint": {
+              "en": "Check if a certain map is the current map"
+            },
+            "platforms": [
+                "local"
+            ],
+            "args": [
+                {
+                    "type": "autocomplete",
+                    "name": "mapname",
+                    "required": true,
+                    "title": {
+                        "en": "Current map"
+                    },
+                    "placeholder": {
+                        "en": "Downstairs"
+                    }
+                }
+            ]
+        }        
     ]
 }
