@@ -11,8 +11,6 @@ class VacuumDevice extends Device {
 	async onInit() {
 
 		this.log('Device ' + this.getName() + ' has been initialized');
-<<<<<<< Updated upstream
-=======
 
 		let api = global.DeviceAPI;
 		if (api == null) {
@@ -21,7 +19,6 @@ class VacuumDevice extends Device {
 		} else {
 			this.log('new device, do nothing else');
 		}
->>>>>>> Stashed changes
 
 		//this.registerCapabilityListener('onoff', this.onCapabilityOnoff.bind(this));
 		this.registerCapabilityListener('AutoClean', this.onCapabilityAutoClean.bind(this));
@@ -36,15 +33,11 @@ class VacuumDevice extends Device {
 
 		this.setStoreValue('flowTokens', []);
 
-		const actionAutoClean = this.homey.flow.getActionCard('auto_clean');
+		const actionAutoClean = this.homey.flow.getActionCard('AutoClean');
 		actionAutoClean.registerRunListener(async (args, state) => {
 			this.vacbot.clean();
 		});
 
-<<<<<<< Updated upstream
-		const actionSpotArea = this.homey.flow.getActionCard('spot_area');
-		actionSpotArea.registerArgumentAutocompleteListener('zone', this.flowAutocompleteactionSpotArea.bind(this));
-=======
 		const actionRetunrDock = this.homey.flow.getActionCard('ReturnDock');
 		actionRetunrDock.registerRunListener(async (args, state) => {
 			this.setCapabilityValue('ReturnDock', true);
@@ -69,7 +62,6 @@ class VacuumDevice extends Device {
 		});
 
 		const actionSpotArea = this.homey.flow.getActionCard('SpotArea');
->>>>>>> Stashed changes
 		actionSpotArea.registerRunListener(async (args, state) => {
 			if (args.zone) {
 				this.log('Clean zone: ' + args.zone.id);
@@ -77,7 +69,7 @@ class VacuumDevice extends Device {
 			}
 		});
 
-		const actionSpotAreas = this.homey.flow.getActionCard('spot_areas');
+		const actionSpotAreas = this.homey.flow.getActionCard('SpotAreas');
 		actionSpotAreas.registerRunListener(async (args, state) => {
 			if (args.zones) {
 				var currentMap = this.getStoreValue('currentMap');
@@ -111,22 +103,6 @@ class VacuumDevice extends Device {
 			}
 		});
 
-<<<<<<< Updated upstream
-		const rechargeAction = this.homey.flow.getActionCard('return_dock');
-		rechargeAction.registerRunListener(this.flowRechargeAction.bind(this));
-
-		// let api = DeviceAPI;
-		let api = global.DeviceAPI;
-		if (api == null) {
-			this.log('system reboot, reconnecting');
-			this.driver.onRepair(null, this);
-		} else {
-			this.log('new device, do nothing else');
-		}
-
-		//const changeChannelCondition = this.homey.flow.getConditionCard('current_channel');
-		//  changeChannelCondition.registerRunListener(this.flowCurrentChannel.bind(this));
-=======
 		const conditionMoppingModule = this.homey.flow.getConditionCard('MoppingModule');
 		conditionMoppingModule.registerRunListener(async (args, state) => {
 			const MoppingModule = await this.getCapabilityValue('MopStatus');
@@ -151,7 +127,6 @@ class VacuumDevice extends Device {
 			return filtered;
 		});
 
->>>>>>> Stashed changes
 	}
 
 	async onAdded() {
@@ -200,10 +175,10 @@ class VacuumDevice extends Device {
 				password: data.password,
 			});
 
-			const changeChargeStateTrigger = this.homey.flow.getDeviceTriggerCard('charge_state_change');
-			const changeOperationTrigger = this.homey.flow.getDeviceTriggerCard('operation_change');
-			const changeZoneTrigger = this.homey.flow.getDeviceTriggerCard('zone_change');
-			const cleanReportTrigger = this.homey.flow.getDeviceTriggerCard('clean_report');
+			const changeChargeStateTrigger = this.homey.flow.getDeviceTriggerCard('ChargeState');
+			const changeOperationTrigger = this.homey.flow.getDeviceTriggerCard('Operation');
+			const changeZoneTrigger = this.homey.flow.getDeviceTriggerCard('LocationReport');
+			const cleanReportTrigger = this.homey.flow.getDeviceTriggerCard('CleanReport');
 
 			const CleanLogTriggerImage = await this.homey.images.createImage();
 			CleanLogTriggerImage.setPath('/userdata/latestCleanLog_(' + data.id + ').png');
@@ -348,7 +323,7 @@ class VacuumDevice extends Device {
 
 				if (oldStatus && (oldStatus != status)) {
 					try {
-						changeChargeStateTrigger.trigger(this, { state: status});
+						changeChargeStateTrigger.trigger(this, { state: status });
 					}
 					catch (error) {
 						this.log('trigger error : ', error);
@@ -541,14 +516,32 @@ class VacuumDevice extends Device {
 
 	async onCapabilityPauseCleaning(value, opts) {
 		if (value) {
-			this.vacbot.run("Pause");
+			if (this.getCapabilityValue('Operation') !== 'idle') {
+				this.vacbot.run("Pause");
+			} else {
+				setTimeout(() => {
+					this.log('Operation not idle, no need to pause');
+					this.setCapabilityValue('PauseCleaning', false);
+				}, 1000);
+			}
 		} else {
 			this.vacbot.run("Resume");
 		}
 	}
+
 	async onCapabilityReturnDock(value, opts) {
-		this.vacbot.run("Charge");
+		if (value) {
+			if (this.getCapabilityValue('Charge') !== 'charging') {
+				this.vacbot.run("Charge");
+			} else {
+				setTimeout(() => {
+					this.log('Deebot already docked, no need to return');
+					this.setCapabilityValue('ReturnDock', false);
+				}, 1000);
+			}
+		}
 	}
+
 
 	//////////////////////////////////////////// Triggers ////////////////////////////////////
 

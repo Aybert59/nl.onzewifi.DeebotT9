@@ -1,11 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "nl.onzewifi.deebott9",
-<<<<<<< Updated upstream
-  "version": "1.1.8",
-=======
-  "version": "1.2.0",
->>>>>>> Stashed changes
+  "version": "1.2.1",
   "compatibility": ">=8.1.1",
   "sdk": 3,
   "name": {
@@ -72,7 +68,7 @@
   "flow": {
     "triggers": [
       {
-        "id": "charge_state_change",
+        "id": "ChargeState",
         "title": {
           "en": "Current chargestate changed"
         },
@@ -97,7 +93,7 @@
         ]
       },
       {
-        "id": "operation_change",
+        "id": "Operation",
         "title": {
           "en": "Current operation changed"
         },
@@ -122,7 +118,7 @@
         ]
       },
       {
-        "id": "zone_change",
+        "id": "LocationReport",
         "title": {
           "en": "Current location changed"
         },
@@ -147,7 +143,7 @@
         ]
       },
       {
-        "id": "clean_report",
+        "id": "CleanReport",
         "title": {
           "en": "New CleanReport"
         },
@@ -198,30 +194,6 @@
             "filter": "driver_id=Deebot"
           }
         ]
-      }
-    ],
-    "actions": [
-      {
-        "id": "auto_clean",
-        "title": {
-          "en": "Start AutoCleaning"
-        },
-        "titleFormatted": {
-          "en": "Start cleaning all rooms"
-        },
-        "platforms": [
-          "local"
-        ],
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=Deebot"
-          }
-        ]
-<<<<<<< Updated upstream
-      },
-=======
       }
     ],
     "conditions": [
@@ -292,9 +264,27 @@
       }
     ],
     "actions": [
->>>>>>> Stashed changes
       {
-        "id": "spot_area",
+        "id": "AutoClean",
+        "title": {
+          "en": "Start AutoCleaning"
+        },
+        "titleFormatted": {
+          "en": "Start cleaning all rooms"
+        },
+        "platforms": [
+          "local"
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Deebot"
+          }
+        ]
+      },
+      {
+        "id": "SpotArea",
         "title": {
           "en": "Clean zone ..."
         },
@@ -324,7 +314,7 @@
         ]
       },
       {
-        "id": "spot_areas",
+        "id": "SpotAreas",
         "title": {
           "en": "Clean zones ..."
         },
@@ -354,12 +344,12 @@
         ]
       },
       {
-        "id": "pauze_clean",
+        "id": "PauseCleaning",
         "title": {
-          "en": "Pauze Cleaning"
+          "en": "pause Cleaning"
         },
         "titleFormatted": {
-          "en": "Temporary pauze cleaning"
+          "en": "Temporary pause cleaning"
         },
         "platforms": [
           "local"
@@ -373,10 +363,51 @@
         ]
       },
       {
-        "id": "return_dock",
+        "id": "ResumeCleaning",
+        "title": {
+          "en": "Resume Cleaning"
+        },
+        "titleFormatted": {
+          "en": "Resume cleaning when pauzed"
+        },
+        "platforms": [
+          "local"
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Deebot"
+          }
+        ]
+      },
+      {
+        "id": "ReturnDock",
         "title": {
           "en": "Return to dock"
         },
+        "titleFormatted": {
+          "en": "Return to charging/autoempty dock"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Deebot"
+          }
+        ]
+      },
+      {
+        "id": "EmptyDustBin",
+        "title": {
+          "en": "Empty the dustbin"
+        },
+        "titleFormatted": {
+          "en": "Empty the dustbin"
+        },
+        "platforms": [
+          "local"
+        ],
         "args": [
           {
             "type": "device",

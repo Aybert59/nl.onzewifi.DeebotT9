@@ -22,8 +22,6 @@ class VacuumDriver extends Driver {
 		*/
 	async onInit() {
 		this.log('Driver Vacuum has been initialized');
-		this.cleanreport = this.homey.flow.getDeviceTriggerCard('clean_report');
-
 	}
 
 	onMapDeviceClass(device) {

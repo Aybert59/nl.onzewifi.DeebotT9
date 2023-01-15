@@ -1,7 +1,7 @@
 {
     "actions": [
         {
-            "id": "auto_clean",
+            "id": "AutoClean",
             "title": {
                 "en": "Start AutoCleaning"
             },
@@ -13,7 +13,7 @@
             ]
         },
         {
-            "id": "spot_area",
+            "id": "SpotArea",
             "title": {
                 "en": "Clean zone ..."
             },
@@ -38,7 +38,7 @@
             ]
         },
         {
-            "id": "spot_areas",
+            "id": "SpotAreas",
             "title": {
                 "en": "Clean zones ..."
             },
@@ -63,27 +63,53 @@
             ]
         },
         {
-            "id": "pauze_clean",
+            "id": "PauseCleaning",
             "title": {
-                "en": "Pauze Cleaning"
+                "en": "pause Cleaning"
             },
             "titleFormatted": {
-                "en": "Temporary pauze cleaning"
+                "en": "Temporary pause cleaning"
             },
             "platforms": [
                 "local"
             ]
         },
         {
-            "id": "return_dock",
+            "id": "ResumeCleaning",
+            "title": {
+                "en": "Resume Cleaning"
+            },
+            "titleFormatted": {
+                "en": "Resume cleaning when pauzed"
+            },
+            "platforms": [
+                "local"
+            ]
+        },
+        {
+            "id": "ReturnDock",
             "title": {
                 "en": "Return to dock"
+            },
+            "titleFormatted": {
+                "en": "Return to charging/autoempty dock"
             }
-        }
-    ],
+        },
+        {
+            "id": "EmptyDustBin",
+            "title": {
+                "en": "Empty the dustbin"
+            },
+            "titleFormatted": {
+                "en": "Empty the dustbin"
+            },
+            "platforms": [
+                "local"
+            ]
+        }    ],
     "triggers": [
         {
-            "id": "charge_state_change",
+            "id": "ChargeState",
             "title": {
                 "en": "Current chargestate changed"
             },
@@ -101,7 +127,7 @@
             ]
         },
         {
-            "id": "operation_change",
+            "id": "Operation",
             "title": {
                 "en": "Current operation changed"
             },
@@ -119,7 +145,7 @@
             ]
         },
         {
-            "id": "zone_change",
+            "id": "LocationReport",
             "title": {
                 "en": "Current location changed"
             },
@@ -137,7 +163,7 @@
             ]
         },
         {
-            "id": "clean_report",
+            "id": "CleanReport",
             "title": {
                 "en": "New CleanReport"
             },
@@ -187,31 +213,31 @@
         {
             "id": "MoppingModule",
             "title": {
-              "en": "Mopping module !{{is|isn't}} attached"
+                "en": "Mopping module !{{is|isn't}} attached"
             },
             "hint": {
-              "en": "Check if the mopping modules is attached"
+                "en": "Check if the mopping modules is attached"
             }
         },
         {
             "id": "AutoEmptyState",
             "title": {
-              "en": "Auto empty is !{{enabled|disabled}}"
+                "en": "Auto empty is !{{enabled|disabled}}"
             },
             "hint": {
-              "en": "Check if the auto emptying of the dustbin is or isn't enable"
+                "en": "Check if the auto emptying of the dustbin is or isn't enable"
             }
-        },        
+        },
         {
             "id": "CurrentMap",
             "title": {
-              "en": "Current map !{{is|isn't}} "
+                "en": "Current map !{{is|isn't}} "
             },
             "titleFormatted": {
                 "en": "Check if [[mapname]] !{{is|isn't}} the current map"
             },
             "hint": {
-              "en": "Check if a certain map is the current map"
+                "en": "Check if a certain map is the current map"
             },
             "platforms": [
                 "local"
@@ -229,6 +255,6 @@
                     }
                 }
             ]
-        }        
+        }
     ]
 }

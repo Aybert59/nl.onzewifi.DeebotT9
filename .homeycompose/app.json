@@ -1,10 +1,6 @@
 {
   "id": "nl.onzewifi.deebott9",
-<<<<<<< Updated upstream
-  "version": "1.1.8",
-=======
   "version": "1.2.1",
->>>>>>> Stashed changes
   "compatibility": ">=8.1.1",
   "sdk": 3,
   "name": {
