@@ -1,16 +1,14 @@
 {
   "id": "nl.onzewifi.deebott9",
-  "version": "1.2.1",
+  "version": "1.2.4",
   "compatibility": ">=8.1.1",
   "sdk": 3,
   "name": {
-    "en": "< Deebot T9 >",
-    "nl": "< Deebot T9 >"
+    "en": "< Ecovacs Deebot >"
   },
   "brandColor": "#4520DF",
   "description": {
-    "en": "Connect your Ecovacs Deebot 950type (with mopping system)",
-    "nl": "Verbind je Ecovacs Deebot 950type (met dweil functie)"
+    "en": "Connect and control your Ecovacs Deebot"
   },
   "contributors": {
     "developers": [
@@ -25,7 +23,6 @@
   "category": [
     "appliances"
   ],
-  "homeyCommunityTopicId": 11498,
   "permissions": [],
   "platforms": [
     "local"
@@ -38,7 +35,7 @@
   "contributing": {
     "donate": {
       "paypal": {
-        "username": "paypal.com/paypalme/paypallrvdijk"
+        "username": "paypallrvdijk"
       }
     }
   },
@@ -47,7 +44,7 @@
     "email": "rvdijk@gmail.com"
   },
   "bugs": {
-    "url": "https://github.com"
+    "url": "https://github.com/cactusss/nl.onzewifi.DeebotT9/issues"
   },
   "drivers": [
     {
@@ -69,12 +66,6 @@
     "en": [
       "Deebot",
       "mopping",
-      "clean report",
-      "ecovacs multimap"
-    ],
-    "nl": [
-      "Deebot",
-      "dweilen",
       "clean report",
       "ecovacs multimap"
     ]
