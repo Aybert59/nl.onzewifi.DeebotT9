@@ -65,7 +65,7 @@
         {
             "id": "PauseCleaning",
             "title": {
-                "en": "pause Cleaning"
+                "en": "Pause Cleaning"
             },
             "titleFormatted": {
                 "en": "Temporary pause cleaning"
@@ -106,7 +106,33 @@
             "platforms": [
                 "local"
             ]
-        }    ],
+        },
+        {
+            "id": "RawCommand",
+            "title": {
+                "en": "Run a raw vacbot command"
+            },
+            "titleFormatted": {
+                "en": "Start a vacbot.run([[command]]) command"
+            },
+            "platforms": [
+                "local"
+            ],
+            "args": [
+                {
+                    "type": "text",
+                    "name": "command",
+                    "required": true,
+                    "title": {
+                        "en": "command"
+                    },
+                    "placeholder": {
+                        "en": "Relocate"
+                    }
+                }
+            ]
+        }
+    ],
     "triggers": [
         {
             "id": "ChargeState",
@@ -201,7 +227,7 @@
                 },
                 {
                     "name": "mopped",
-                    "type": "string",
+                    "type": "boolean",
                     "title": {
                         "en": "Mop installed"
                     }
