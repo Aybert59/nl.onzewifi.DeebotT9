@@ -28,24 +28,16 @@
           "options": {
 
               "usernameLabel": {
-                  "en": "Ecovacs account",
-                  "fr": "Compte Ecovacs",
-                  "nl": "Ecovacs account"
+                  "en": "Ecovacs account"
               },
               "usernamePlaceholder": {
-                  "en": "john@doe.com",
-                  "fr": "ciel@monmari.com",
-                  "nl": "jan@klaasen.nl"
+                  "en": "john@doe.com"
               },
               "passwordLabel": {
-                  "en": "Password",
-                  "fr": "Mot de passe",
-                  "nl": "Wachtwoord"
+                  "en": "Password"
               },
               "passwordPlaceholder": {
-                  "en": "Password",
-                  "fr": "secret",
-                  "nl": "geheim!"
+                  "en": "Password"
               }
           }
       }, {
@@ -68,8 +60,9 @@
       "batteries": ["INTERNAL"]
   },
   "images": {
-      "large": "/drivers/Deebot/assets/images/Deebot-large.png",
-      "small": "/drivers/Deebot/assets/images/Deebot-small.png"
+    "xlarge": "/drivers/Deebot/assets/images/XLarge.png",
+    "large": "/drivers/Deebot/assets/images/Large.png",
+    "small": "/drivers/Deebot/assets/images/Small.png"
 
   }
 }
